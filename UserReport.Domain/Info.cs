@@ -2,6 +2,7 @@ namespace UserReport.Domain;
 
 public class Info
 {
+    public int Id { get; set; }
     public required string Seed { get; set; }
     public int Results { get; set; }
     public int Page { get; set; }

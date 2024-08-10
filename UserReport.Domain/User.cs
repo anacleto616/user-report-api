@@ -2,6 +2,7 @@
 
 public class User
 {
+    public int UserId { get; set; }
     public required string Gender { get; set; }
     public required Name Name { get; set; }
     public required Location Location { get; set; }
