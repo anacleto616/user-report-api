@@ -2,7 +2,7 @@ namespace UserReport.Domain;
 
 public class Location
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public required Street Street { get; set; }
     public required string City { get; set; }
     public required string State { get; set; }

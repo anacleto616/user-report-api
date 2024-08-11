@@ -17,7 +17,4 @@ public class UserReportContext(DbContextOptions<UserReportContext> options) : Db
     public DbSet<Identification> Identifications { get; set; }
     public DbSet<Picture> Pictures { get; set; }
     public DbSet<Info> Infos { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
-        modelBuilder.Entity<User>().HasKey(u => u.UserId);
 }

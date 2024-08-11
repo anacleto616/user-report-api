@@ -2,7 +2,7 @@ namespace UserReport.Domain;
 
 public class Login
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public required string Uuid { get; set; }
     public required string Username { get; set; }
     public required string Password { get; set; }
