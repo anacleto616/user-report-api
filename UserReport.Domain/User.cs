@@ -1,6 +1,7 @@
 ﻿namespace UserReport.Domain;
 
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 [PrimaryKey(nameof(UserId))]
 public class User
@@ -15,7 +16,9 @@ public class User
     public required Registered Registered { get; set; }
     public required string Phone { get; set; }
     public required string Cell { get; set; }
-    public required Identification Id { get; set; }
+
+    [JsonProperty("id")]
+    public required Identification Identity { get; set; }
     public required Picture Picture { get; set; }
     public required string Nat { get; set; }
 }

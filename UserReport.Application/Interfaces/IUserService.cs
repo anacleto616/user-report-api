@@ -4,5 +4,5 @@ using UserReport.Domain.DTOs;
 
 public interface IUserService
 {
-    Task<UserDto?> AddUser();
+    Task<List<UserDto?>?> AddUsers(int numberOfUsers);
 }

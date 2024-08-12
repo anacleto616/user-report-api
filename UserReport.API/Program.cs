@@ -48,11 +48,11 @@ using (var scope = app.Services.CreateScope())
         var userService = services.GetRequiredService<IUserService>();
 
         // Chama o serviço para adicionar o usuário a partir da API externa
-        var savedUser = await userService.AddUser();
+        var savedUsers = await userService.AddUsers(10);
 
-        if (savedUser != null)
+        if (savedUsers != null)
         {
-            Console.WriteLine($"User {savedUser.Email} was saved successfully!");
+            Console.WriteLine($"User was saved successfully!");
         }
         else
         {

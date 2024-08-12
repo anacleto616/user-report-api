@@ -304,7 +304,7 @@ namespace UserReport.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("Id1")
+                    b.Property<Guid>("IdentityId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("LocationId")
@@ -334,7 +334,7 @@ namespace UserReport.Persistence.Migrations
 
                     b.HasIndex("DobId");
 
-                    b.HasIndex("Id1");
+                    b.HasIndex("IdentityId");
 
                     b.HasIndex("LocationId");
 
@@ -384,9 +384,9 @@ namespace UserReport.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserReport.Domain.Identification", "Id")
+                    b.HasOne("UserReport.Domain.Identification", "Identity")
                         .WithMany()
-                        .HasForeignKey("Id1")
+                        .HasForeignKey("IdentityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -422,7 +422,7 @@ namespace UserReport.Persistence.Migrations
 
                     b.Navigation("Dob");
 
-                    b.Navigation("Id");
+                    b.Navigation("Identity");
 
                     b.Navigation("Location");
 

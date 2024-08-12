@@ -200,7 +200,7 @@ namespace UserReport.Persistence.Migrations
                     RegisteredId = table.Column<Guid>(type: "uuid", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
                     Cell = table.Column<string>(type: "text", nullable: false),
-                    Id1 = table.Column<Guid>(type: "uuid", nullable: false),
+                    IdentityId = table.Column<Guid>(type: "uuid", nullable: false),
                     PictureId = table.Column<Guid>(type: "uuid", nullable: false),
                     Nat = table.Column<string>(type: "text", nullable: false)
                 },
@@ -214,8 +214,8 @@ namespace UserReport.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Users_Identifications_Id1",
-                        column: x => x.Id1,
+                        name: "FK_Users_Identifications_IdentityId",
+                        column: x => x.IdentityId,
                         principalTable: "Identifications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -272,9 +272,9 @@ namespace UserReport.Persistence.Migrations
                 column: "DobId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Id1",
+                name: "IX_Users_IdentityId",
                 table: "Users",
-                column: "Id1");
+                column: "IdentityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_LocationId",
