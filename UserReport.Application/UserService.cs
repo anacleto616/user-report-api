@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UserReport.Application.Interfaces;
+using UserReport.Domain;
 using UserReport.Domain.DTOs;
 using UserReport.Domain.Mappings;
 using UserReport.Persistence.Contexts;
@@ -19,7 +20,7 @@ public class UserService(
 
     private readonly HttpClient httpClient = httpClientFactory.CreateClient("IRandomUserApi");
 
-    public async Task<List<UserDto?>?> AddUsers(int numberOfUsers)
+    public async Task<List<UserDto>> AddUsers(int numberOfUsers)
     {
         try
         {
@@ -71,6 +72,24 @@ public class UserService(
                 "An error occurred while processing the request.",
                 ex
             );
+        }
+    }
+
+    public async Task<List<User>> GetAllUsersAsync()
+    {
+        try
+        {
+            var users = await this.userPersist.GetAllUsersAsync();
+            if (users == null)
+            {
+                return null;
+            }
+
+            return users;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
         }
     }
 }

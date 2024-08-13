@@ -14,6 +14,14 @@ public class UserReportPersist(UserReportContext context) : IUserPersist
     public void Add<T>(T entity)
         where T : class => this.context.Add(entity);
 
+    public async Task<List<User>> GetAllUsersAsync() =>
+        await this
+            .context.Users.Include(u => u.Name)
+            .Include(u => u.Dob)
+            .Include(u => u.Picture)
+            .OrderBy(e => e.Name.First)
+            .ToListAsync();
+
     public async Task<User?> GetUserByIdAsync(Guid userId)
     {
         IQueryable<User> query = this.context.Users;

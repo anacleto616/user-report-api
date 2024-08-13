@@ -17,10 +17,12 @@ var connectionString =
     + $"Username={Environment.GetEnvironmentVariable("POSTGRES_USER")};"
     + $"Password={Environment.GetEnvironmentVariable("POSTGRES_PASSWORD")}";
 
-// Add services to the container.
 builder.Services.AddDbContext<UserReportContext>(options => options.UseNpgsql(connectionString));
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserPersist, UserReportPersist>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors();
 
 builder.Services.AddHttpClient(
     "IRandomUserApi",
@@ -33,12 +35,10 @@ builder.Services.AddHttpClient(
     }
 );
 
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Lógica de inicialização para salvar o usuário ao iniciar a aplicação
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -47,7 +47,6 @@ using (var scope = app.Services.CreateScope())
     {
         var userService = services.GetRequiredService<IUserService>();
 
-        // Chama o serviço para adicionar o usuário a partir da API externa
         var savedUsers = await userService.AddUsers(10);
 
         if (savedUsers != null)
@@ -65,13 +64,14 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+app.MapControllers();
 
 app.Run();
