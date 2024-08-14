@@ -47,15 +47,24 @@ using (var scope = app.Services.CreateScope())
     {
         var userService = services.GetRequiredService<IUserService>();
 
-        var savedUsers = await userService.AddUsers(10);
+        var users = await userService.GetAllUsersAsync();
 
-        if (savedUsers != null)
+        if (users.Count > 10)
         {
-            Console.WriteLine($"User was saved successfully!");
+            Console.WriteLine("There are already registered users.");
         }
         else
         {
-            Console.WriteLine("User could not be saved.");
+            var savedUsers = await userService.AddUsers(10);
+
+            if (savedUsers != null)
+            {
+                Console.WriteLine($"Users was saved successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Users could not be saved.");
+            }
         }
     }
     catch (Exception ex)

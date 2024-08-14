@@ -38,25 +38,19 @@ public class UserService(
 
             var users = apiResponse.Results.Select(apiUser => apiUser.ToEntity()).ToList();
 
-            // Início da transação
             using var transaction = await this.dbContext.Database.BeginTransactionAsync();
             try
             {
-                // Adiciona todos os usuários ao contexto
                 await this.dbContext.AddRangeAsync(users);
 
-                // Salva todas as alterações em uma única operação
                 await this.dbContext.SaveChangesAsync();
 
-                // Commit da transação se tudo ocorrer bem
                 await transaction.CommitAsync();
 
-                // Converte e retorna os DTOs dos usuários adicionados
                 return users.Select(user => user.ToDto()).ToList();
             }
             catch (Exception ex)
             {
-                // Rollback da transação se qualquer erro ocorrer
                 await transaction.RollbackAsync();
                 Console.WriteLine($"Error Details: {ex}");
                 throw new InvalidOperationException(
